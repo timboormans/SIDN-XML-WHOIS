@@ -1,0 +1,147 @@
+Array
+(
+    [domain] => directwebsolutions.nl
+    [view] => isp
+    [date] => 2010-05-04T19:04:32.27205Z
+    [status] => Array
+        (
+            [code] => active
+            [lang] => nl-NL
+            [format] => PLAIN
+        )
+
+    [registrar] => Array
+        (
+            [date] => 2010-05-04T19:04:32Z
+            [name] => Direct Web Solutions
+            [street] => Somestreet 11
+            [postal_code] => 0000AA
+            [city] => MAASTRICHT
+            [country_name] => Nederland
+            [country_code] => NL
+            [country_lang] => nl-NL
+        )
+
+    [registrant] => Array
+        (
+            [id] => DIR002653-DIRWS
+            [view] => all
+            [date] => 2010-05-04T19:04:32Z
+            [name] => Direct Web Solutions
+            [email] => mail@directwebsolutions.nl
+            [voice] => +31.437113722
+            [has_address] => 1
+            [street] => Somestreet 11
+            [postal_code] => 0000AA
+            [city] => MAASTRICHT
+            [country_code] => NL
+            [country_name] => Nederland
+            [contact_type] => registrant
+        )
+
+    [admin] => Array
+        (
+            [id] => DIR002653-DIRWS
+            [view] => all
+            [date] => 2010-05-04T19:04:32Z
+            [name] => Direct Web Solutions
+            [email] => mail@directwebsolutions.nl
+            [voice] => +31.437113722
+            [has_address] => 
+            [street] => 
+            [postal_code] => 
+            [city] => 
+            [country_code] => 
+            [country_name] => 
+            [contact_type] => admin
+        )
+
+    [tech] => Array
+        (
+            [0] => Array
+                (
+                    [id] => DIR002653-DIRWS
+                    [view] => all
+                    [date] => 2010-05-04T19:04:32Z
+                    [name] => Technisch contactpersoon
+                    [email] => mail@directwebsolutions.nl
+                    [voice] => +31.437113722
+                    [has_address] => 1
+                    [street] => Somestreet 11
+                    [postal_code] => 0000AA
+                    [city] => MAASTRICHT
+                    [country_code] => NL
+                    [country_name] => Nederland
+                    [contact_type] => tech
+                )
+
+        )
+
+    [hosts] => Array
+        (
+            [0] => Array
+                (
+                    [hostname] => ns1.nameserver.com
+                    [date] => 
+                    [ipv4] => Array
+                        (
+                        )
+
+                    [ipv6] => Array
+                        (
+                        )
+
+                    [zone] => out-zone
+                )
+
+            [1] => Array
+                (
+                    [hostname] => ns2.nameserver.com
+                    [date] => 
+                    [ipv4] => Array
+                        (
+                        )
+
+                    [ipv6] => Array
+                        (
+                        )
+
+                    [zone] => out-zone
+                )
+
+        )
+
+    [registered] => 1998-09-02+02:00
+    [last_change] => 2009-12-30+01:00
+    [out_quarantine] => 
+    [maintainer] => Array
+        (
+            [lang] => nl-NL
+            [format] => PLAIN
+            [desc] => NL Domain Registry
+        )
+
+    [copyright] => Array
+        (
+            [lang] => nl-NL
+            [format] => PLAIN
+            [desc] => Auteursrechtvoorbehoud
+Niets uit deze publicatie mag zonder voorafgaande uitdrukkelijke
+toestemming van SIDN worden verveelvoudigd, openbaar gemaakt, worden
+opgeslagen in een gegevensbestand of worden overgezonden, in welke
+vorm dan ook, elektronisch, mechanisch, door middel van opname of
+anderszins. Voor registrars geldt dit voorbehoud onverkort, behoudens
+redelijkerwijs noodzakelijke verveelvoudigingen of openbaarmakingen
+ten behoeve van de werkzaamheden van registrars, zoals vermeld in de
+'Algemene voorwaarden voor registrars'.
+
+Elk gebruik van deze informatie voor commerciele of reclamedoeleinden of
+soortgelijke activiteiten, is expliciet verboden en tegen overtreding van
+dat verbod zal worden opgetreden. Stichting Internet Domeinregistratie
+Nederland (SIDN) verzoekt te worden geinformeerd bij constatering van
+dergelijke activiteiten of enig vermoeden daarvan.
+Copyrights: Stichting Internet Domeinregistratie Nederland (SIDN)
+Auteurswet, geschriftenbescherming (art. 10 lid 1 sub 1).
+        )
+
+)
