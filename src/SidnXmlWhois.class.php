@@ -425,8 +425,8 @@ class SidnXmlWhois {
         }
 
         // properties
-        $txt_whois .= "Creation Date: ".preg_replace('/\+[0-9]{2}:[0-9]{2}/i', '', $this->registered)."\n";
-        $txt_whois .= "Updated Date: ".preg_replace('/\+[0-9]{2}:[0-9]{2}/i', '', $this->last_change)."\n";
+        $txt_whois .= "Creation Date: ".preg_replace('/Z.*/i', '', $this->registered)."\n";
+        $txt_whois .= "Updated Date: ".preg_replace('/Z.*/i', '', $this->last_change)."\n";
         $txt_whois .= "\n";
         $txt_whois .= "Record maintained by: ".$this->maintainer->description."\n";
         $txt_whois .= "Printable whois by: Direct Web Solutions B.V.\n";
