@@ -33,12 +33,62 @@ foreach(glob('src/*.class.php') as $filename) {
 
 // execute
 if(isset($_POST['domain']) && strlen($_POST['domain']) > 0) {
-	$whois = new SidnXmlWhois($_POST['domain']);
-	$whois->print_whois(true);
+    $whois = new SidnXmlWhois('NL');
+    $whois->whois($_POST['domain']);
+    $whois->printWhois();
+}
+?>
+```
+
+Specific for IPv4 transport you would do this:
+
+```PHP
+<?php
+if(isset($_POST['domain']) && strlen($_POST['domain']) > 0) {
+    $whois = new SidnXmlWhois('NL');
+    $whois->force_ipv4 = true;
+    $whois->bindto_ipv4_address = '1.2.3.4';
+    $whois->whois($_POST['domain']);
+    $whois->printWhois();
+}
+?>
+```
+
+Specific for IPv6 transport you would use this:
+
+```PHP
+<?php
+if(isset($_POST['domain']) && strlen($_POST['domain']) > 0) {
+    $whois = new SidnXmlWhois('NL');
+    $whois->force_ipv6 = true;
+    $whois->bindto_ipv6_address = '1:2:3:4:5:6:7:8';
+    $whois->whois($_POST['domain']);
+    $whois->printWhois();
+}
+?>
+```
+
+And if choosing only specific parts of the WHOIS use this:
+
+```PHP
+<?php
+if(isset($_POST['domain']) && strlen($_POST['domain']) > 0) {
+    $whois = new SidnXmlWhois('NL');
+    $whois->whois($_POST['domain']);
+    
+    // all optional
+    $whois->parseContactRole('registrant');
+    $whois->parseContactRole('admin');
+    $whois->parseContactRole('tech');
+    $whois->parseRegistrar();
+    $whois->parseHosts();
+    
+    // output
+    $whois->printWhois();
 }
 ?>
 ```
 
 ###### Author notes
-* Originally created in 2010 and revised in 2012.
+* Originally created in 2010 and revised in 2012. Overhauled in 2018 to keep it working with PHP 7+.
 * Published on GitHub for easier community driven development.

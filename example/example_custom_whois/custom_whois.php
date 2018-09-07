@@ -9,9 +9,9 @@ foreach(glob('src/*.class.php') as $filename) {
 }
 
 // application
-$whois = new SidnXmlWhois('directwebsolutions.nl', 'NL', true);
-$whois->parse_contact_role('registrant'); // add 'registrant' to the result set
-$whois->parse_contact_role('admin'); // add 'admin' to the result set
-$whois->parse_contact_role('tech'); // add 'tech' to the result set
-$whois->parse_registrar(); // add 'registrar' to the result set
-$whois->print_whois(true); // print the result set
+$whois = new SidnXmlWhois('NL');
+$whois->parseContactRole('registrant'); // add 'registrant' to the result set
+$whois->parseContactRole('admin'); // add 'admin' to the result set
+$whois->parseContactRole('tech'); // add 'tech' to the result set
+$whois->parseRegistrar(); // add 'registrar' to the result set
+$whois->printWhois(); // print the result set

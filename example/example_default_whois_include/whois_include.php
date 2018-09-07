@@ -9,10 +9,11 @@ foreach(glob('src/*.class.php') as $filename) {
 }
 
 // init
-$whois = new SidnXmlWhois('directwebsolutions.nl');
+$whois = new SidnXmlWhois('NL');
+$whois->whois('directwebsolutions.nl');
 
 // Print the complete WHOIS-record
-$whois->print_whois(true);
+//$whois->printWhois();
 
 // Use the OBJECT to display/copy only needed information
 /* @var SidnXmlWhoisContact $whois->registrant */
@@ -20,5 +21,5 @@ print "<br>Registrant: ".$whois->registrant->name;
 print "<br>Registrar: ".$whois->registrar->name;
 
 // Use an ARRAY with textstrings instead of object orientation
-$whois_ARRAY = $whois->get_whois_array();
+$whois_ARRAY = $whois->returnWhoisAsArray();
 print '<br>Registrant: '.$whois_ARRAY['registrant']['name'];

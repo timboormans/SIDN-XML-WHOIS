@@ -25,8 +25,9 @@ foreach(glob('src/*.class.php') as $filename) {
 
 // execute
 if(isset($_POST['domain']) && strlen($_POST['domain']) > 0) {
-	$whois = new SidnXmlWhois($_POST['domain']);
-	$whois->print_whois(true);
+	$whois = new SidnXmlWhois('NL');
+    $whois->whois($_POST['domain']);
+	$whois->printWhois();
 }
 ?>
 
