@@ -4,7 +4,8 @@
  * A class to interface with the SIDN XML WHOIS.
  * This class creates objects to influence the structure of the output.
  *
- * @author Tim Boormans (Direct Web Solutions B.V.)
+ * @author Tim Boormans
+ * @copyright Direct Web Solutions B.V.
  * @license GPL
  */
 class SidnXmlWhois {
