@@ -23,28 +23,28 @@ class SidnXmlWhois {
     // gettable
     public $lang = 'NL'; // NL|EN
     public $domain = '';
-	public $view = '';
-	public $date = ''; // date of this request
-	public $status = array('code' => '', 'lang' => '', 'format' => 'XML');
-	public $registrar = array(); // exact 1
-	public $registrant = array(); // exact 1
-	public $admin = array(); // exact 1
-	public $tech = array(); // 1 or more
-	public $hosts = array(); // 0 or more
-	public $registered = '';
-	public $last_change = '';
-	public $out_quarantine = '';
-	public $maintainer = array(); // 0 or more
-	public $copyright = array(); // 0 or more
+    public $view = '';
+    public $date = ''; // date of this request
+    public $status = array('code' => '', 'lang' => '', 'format' => 'XML');
+    public $registrar = array(); // exact 1
+    public $registrant = array(); // exact 1
+    public $admin = array(); // exact 1
+    public $tech = array(); // 1 or more
+    public $hosts = array(); // 0 or more
+    public $registered = '';
+    public $last_change = '';
+    public $out_quarantine = '';
+    public $maintainer = array(); // 0 or more
+    public $copyright = array(); // 0 or more
 
     // private
-	private $xml_obj;
+    private $xml_obj;
     private $parse_strategy = 'all';
     private $parse_roles = array();
     private $parsed_contact_roles = array('registrant' => '', 'admin' => '', 'tech' => array()); // 0 or more
     private $parsed_host_roles = array();
     private $xml_str = '';
-	private $log = array();
+    private $log = array();
 
 	public function __construct($lang = 'NL') {
         $this->lang = $lang;
