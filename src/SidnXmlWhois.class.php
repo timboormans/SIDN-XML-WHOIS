@@ -27,6 +27,7 @@ class SidnXmlWhois {
     public $date = ''; // date of this request
     public $status = array('code' => '', 'lang' => '', 'format' => 'XML');
     public $registrar = array(); // exact 1
+    public $reseller = array(); // 0 or 1
     public $registrant = array(); // exact 1
     public $admin = array(); // exact 1
     public $tech = array(); // 1 or more
@@ -239,6 +240,39 @@ class SidnXmlWhois {
     }
 
     /**
+     * Parse the reseller details to $this result object
+     */
+    public function parseReseller() {
+        $this->parse_strategy = 'selective';
+
+        if($this->xml_obj === null) {
+            $this->reParseBaseWhoisElements();
+        }
+
+        // registrar details
+        $res = array();
+        $res['date'] = $this->xml_obj->xpath('/whois-response/reseller/date'); // date
+        $res['name'] = $this->xml_obj->xpath('/whois-response/reseller/name'); // name
+        $res['street'] = $this->xml_obj->xpath('/whois-response/reseller/address/street'); // street
+        $res['postal_code'] = $this->xml_obj->xpath('/whois-response/reseller/address/postal-code'); // postal code
+        $res['city'] = $this->xml_obj->xpath('/whois-response/reseller/address/city'); // city
+        $res['cc'] = $this->xml_obj->xpath('/whois-response/reseller/address/country-code'); // country code
+        $res['cl'] = $this->xml_obj->xpath('/whois-response/reseller/address/country'); // country lang
+
+        $d = array();
+        $d['date'] = (string) $res['date'][0];
+        $d['name'] = (string) $res['name'][0];
+        $d['street'] = (string) $res['street'][0];
+        $d['postal_code'] = (string) $res['postal_code'][0];
+        $d['city'] = (string) $res['city'][0];
+        $d['cc'] = (string) $res['cc'][0];
+        $d['cl'] = (string) $res['cl'][0]['lang'];
+        $cn = (string)$res['cl'][0];
+
+        $this->reseller = new SidnXmlWhoisReseller($d['date'], $d['name'], $d['street'], $d['postal_code'], $d['city'], $d['cc'], $d['cl'], $cn);
+    }
+
+    /**
      * Parse the nameservers to $this result object
      */
     public function parseHosts() {
@@ -365,6 +399,16 @@ class SidnXmlWhois {
             $txt_whois .= "  ".$this->registrar->street."\n";
             $txt_whois .= "  ".$this->registrar->postal_code." ".$this->registrar->city."\n";
             $txt_whois .= "  ".$this->registrar->country_name."\n";
+            $txt_whois .= "\n";
+        }
+
+        // reseller
+        if(count($this->reseller) > 0) {
+            $txt_whois .= "Reseller:\n";
+            $txt_whois .= "  ".$this->reseller->name."\n";
+            $txt_whois .= "  ".$this->reseller->street."\n";
+            $txt_whois .= "  ".$this->reseller->postal_code." ".$this->reseller->city."\n";
+            $txt_whois .= "  ".$this->reseller->country_name."\n";
             $txt_whois .= "\n";
         }
 
@@ -497,6 +541,18 @@ class SidnXmlWhois {
                                         ,'country_lang' => $this->registrar->country_lang
                                     ) : array()
                                     )
+                    ,'reseller' => ((count($this->reseller) > 0) ?
+                                    array(
+                                         'date' => $this->reseller->date
+                                        ,'name' => $this->reseller->name
+                                        ,'street' => $this->reseller->street
+                                        ,'postal_code' => $this->reseller->postal_code
+                                        ,'city' => $this->reseller->city
+                                        ,'country_name' => $this->reseller->country_name
+                                        ,'country_code' => $this->reseller->country_code
+                                        ,'country_lang' => $this->reseller->country_lang
+                                    ) : array()
+                                    )
                     ,'registrant' => ((count($this->registrant) > 0) ?
                                     array(
                                          'id' => $this->registrant->id
@@ -587,6 +643,11 @@ class SidnXmlWhois {
             // registrar
             if(preg_match('/<registrar>/i', $this->xml_str)) {
                 $this->parseRegistrar();
+            }
+
+            // reseller
+            if(preg_match('/<reseller>/i', $this->xml_str)) {
+                $this->parseReseller();
             }
 
             // hosts

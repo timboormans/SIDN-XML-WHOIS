@@ -14,4 +14,5 @@ $whois->parseContactRole('registrant'); // add 'registrant' to the result set
 $whois->parseContactRole('admin'); // add 'admin' to the result set
 $whois->parseContactRole('tech'); // add 'tech' to the result set
 $whois->parseRegistrar(); // add 'registrar' to the result set
+$whois->parseReseller(); // add 'reseller' to the result set
 $whois->printWhois(); // print the result set

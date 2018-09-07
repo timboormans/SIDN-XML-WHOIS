@@ -13,7 +13,6 @@ See the examples folder for the different use cases.
 
 ### Notes
 The script is still working great, but needs some maintenance to cope support new functionality as released at the registry:
-* Reseller support should be added
 * DNSSEC support should be added
 * Old pdf documentation should be rewritten to HTML documentation
 
@@ -81,6 +80,7 @@ if(isset($_POST['domain']) && strlen($_POST['domain']) > 0) {
     $whois->parseContactRole('admin');
     $whois->parseContactRole('tech');
     $whois->parseRegistrar();
+    $whois->parseReseller();
     $whois->parseHosts();
     
     // output
