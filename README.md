@@ -9,11 +9,10 @@ See the examples folder for the different use cases.
 * Sockets or cURL
 * SIDN registrar accreditation
 * Your server firewall allowing outgoing connections
-* Your server IPv4 (and if applicable IPv6) need to added to the SIDN IP whitelist.
+* Your server IPv4 (and if applicable IPv6) needs to added to the SIDN IP whitelist.
 
-### Notes
-The script is still working great, but needs some maintenance to cope support new functionality as released at the registry:
-* Old pdf documentation should be rewritten to HTML documentation
+### To-do
+* Incorrect old PDF docs need to be rewritten to HTML documentation.
 
 ## Example
 An example in it's most simple form:
@@ -22,7 +21,7 @@ An example in it's most simple form:
 <?php
 // include logic
 if(!file_exists('src')) {
-    chdir('../..');
+    chdir('../..'); // make examples executable from examples folder
 }
 
 foreach(glob('src/*.class.php') as $filename) {
@@ -80,6 +79,7 @@ if(isset($_POST['domain']) && strlen($_POST['domain']) > 0) {
     $whois->parseContactRole('tech');
     $whois->parseRegistrar();
     $whois->parseReseller();
+    $whois->parseAbuseContact();
     $whois->parseHosts();
     
     // output
@@ -89,5 +89,5 @@ if(isset($_POST['domain']) && strlen($_POST['domain']) > 0) {
 ```
 
 ###### Author notes
-* Originally created in 2010 and revised in 2012. Overhauled in 2018 to keep it working with PHP 7+.
+* Initiated in 2010 and revised in 2012. Overhauled in 2018 to keep it working with PHP 7+ and added support for all new available functionality.
 * Published on GitHub for easier community driven development.

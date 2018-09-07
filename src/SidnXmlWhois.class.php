@@ -28,6 +28,7 @@ class SidnXmlWhois {
     public $status = array('code' => '', 'lang' => '', 'format' => 'XML');
     public $registrar = array(); // exact 1
     public $reseller = array(); // 0 or 1
+    public $abuse_contact = array(); // 0 or 1
     public $registrant = array(); // exact 1
     public $admin = array(); // exact 1
     public $tech = array(); // 1 or more
@@ -250,7 +251,7 @@ class SidnXmlWhois {
             $this->reParseBaseWhoisElements();
         }
 
-        // registrar details
+        // reseller details
         $res = array();
         $res['date'] = $this->xml_obj->xpath('/whois-response/reseller/date'); // date
         $res['name'] = $this->xml_obj->xpath('/whois-response/reseller/name'); // name
@@ -271,6 +272,30 @@ class SidnXmlWhois {
         $cn = (string)$res['cl'][0];
 
         $this->reseller = new SidnXmlWhoisReseller($d['date'], $d['name'], $d['street'], $d['postal_code'], $d['city'], $d['cc'], $d['cl'], $cn);
+    }
+
+    /**
+     * Parse the abuse contact details to $this result object
+     */
+    public function parseAbuseContact() {
+        $this->parse_strategy = 'selective';
+
+        if($this->xml_obj === null) {
+            $this->reParseBaseWhoisElements();
+        }
+
+        // abuse contact details
+        $res = array();
+        $res['date'] = $this->xml_obj->xpath('/whois-response/abuseContact/date');
+        $res['voice'] = $this->xml_obj->xpath('/whois-response/abuseContact/voice');
+        $res['email'] = $this->xml_obj->xpath('/whois-response/abuseContact/email');
+
+        $d = array();
+        $d['date'] = (string) $res['date'][0];
+        $d['voice'] = (string) $res['voice'][0];
+        $d['email'] = (string) $res['email'][0];
+
+        $this->abuse_contact = new SidnXmlWhoisAbuseContact($d['date'], $d['voice'], $d['email']);
     }
 
     /**
@@ -410,6 +435,13 @@ class SidnXmlWhois {
             $txt_whois .= "  ".$this->reseller->street."\n";
             $txt_whois .= "  ".$this->reseller->postal_code." ".$this->reseller->city."\n";
             $txt_whois .= "  ".$this->reseller->country_name."\n";
+            $txt_whois .= "\n";
+        }
+
+        if(count($this->abuse_contact) > 0) {
+            $txt_whois .= "Abuse Contact:\n";
+            $txt_whois .= "  ".$this->abuse_contact->voice."\n";
+            $txt_whois .= "  ".$this->abuse_contact->email."\n";
             $txt_whois .= "\n";
         }
 
@@ -560,6 +592,13 @@ class SidnXmlWhois {
                                         ,'country_lang' => $this->reseller->country_lang
                                     ) : array()
                                     )
+                    ,'abuse_contact' => ((count($this->abuse_contact) > 0) ?
+                                    array(
+                                         'date' => $this->abuse_contact->date
+                                        ,'voice' => $this->abuse_contact->voice
+                                        ,'email' => $this->abuse_contact->email
+                                    ) : array()
+                                    )
                     ,'registrant' => ((count($this->registrant) > 0) ?
                                     array(
                                          'id' => $this->registrant->id
@@ -661,6 +700,11 @@ class SidnXmlWhois {
             // reseller
             if(preg_match('/<reseller>/i', $this->xml_str)) {
                 $this->parseReseller();
+            }
+
+            // abuse contact
+            if(preg_match('/<abuseContact>/i', $this->xml_str)) {
+                $this->parseAbuseContact();
             }
 
             // hosts
