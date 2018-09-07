@@ -13,7 +13,6 @@ See the examples folder for the different use cases.
 
 ### Notes
 The script is still working great, but needs some maintenance to cope support new functionality as released at the registry:
-* DNSSEC support should be added
 * Old pdf documentation should be rewritten to HTML documentation
 
 ## Example

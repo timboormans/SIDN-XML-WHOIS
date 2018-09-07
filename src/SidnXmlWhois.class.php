@@ -32,6 +32,7 @@ class SidnXmlWhois {
     public $admin = array(); // exact 1
     public $tech = array(); // 1 or more
     public $hosts = array(); // 0 or more
+    public $dnssec = false;
     public $registered = '';
     public $last_change = '';
     public $out_quarantine = '';
@@ -469,6 +470,12 @@ class SidnXmlWhois {
             $txt_whois .= "  \n";
         }
 
+        if(count($this->hosts) > 0) {
+            // dnssec
+            $txt_whois .= "DNSSEC: ".($this->dnssec ? 'yes' : 'no')."\n";
+            $txt_whois .= "\n";
+        }
+
         // properties
         $txt_whois .= "Creation Date: ".preg_replace('/Z.*/i', '', $this->registered)."\n";
         $txt_whois .= "Updated Date: ".preg_replace('/Z.*/i', '', $this->last_change)."\n";
@@ -589,6 +596,7 @@ class SidnXmlWhois {
                                     )
                     ,'tech' => $tech_arr
                     ,'hosts' => $hosts_arr
+                    ,'dnssec' => $this->dnssec
                     ,'registered' => $this->registered
                     ,'last_change' => $this->last_change
                     ,'out_quarantine' => $this->out_quarantine
@@ -634,6 +642,11 @@ class SidnXmlWhois {
         $this->status['lang'] = $node['lang'];
         $this->status['format'] = strtoupper($node['format']);
 
+        // domain dnssec
+        $res = $this->xml_obj->xpath('/whois-response/domain/dnssec');
+        $node = current($res[0]);
+        $this->dnssec = ($node == 'yes');
+
         if($this->parse_strategy == 'all') { // parse all
             // contacts
             if(preg_match('/<contact/i', $this->xml_str)) {
@@ -654,6 +667,7 @@ class SidnXmlWhois {
             if(preg_match('/<nameserver/i', $this->xml_str)) {
                 $this->parseHosts();
             }
+
         } // else these are parsed before this function was triggered
 
         // registered
