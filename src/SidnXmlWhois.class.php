@@ -226,13 +226,13 @@ class SidnXmlWhois {
         $res['cl'] = $this->xml_obj->xpath('/whois-response/registrar/address/country'); // country lang
 
         $d = array();
-        list( , $node) = each($res['date'][0]); $d['date'] = $node;
-        list( , $node) = each($res['name'][0]); $d['name'] = $node;
-        list( , $node) = each($res['street'][0]); $d['street'] = $node;
-        list( , $node) = each($res['postal_code'][0]); $d['postal_code'] = $node;
-        list( , $node) = each($res['city'][0]); $d['city'] = $node;
-        list( , $node) = each($res['cc'][0]); $d['cc'] = $node;
-        list( , $node) = each($res['cl'][0]); $d['cl'] = $node['lang'];
+        $d['date'] = (string) $res['date'][0];
+        $d['name'] = (string) $res['name'][0];
+        $d['street'] = (string) $res['street'][0];
+        $d['postal_code'] = (string) $res['postal_code'][0];
+        $d['city'] = (string) $res['city'][0];
+        $d['cc'] = (string) $res['cc'][0];
+        $d['cl'] = (string) $res['cl'][0]['lang'];
         $cn = (string)$res['cl'][0];
 
         $this->registrar = new SidnXmlWhoisRegistrar($d['date'], $d['name'], $d['street'], $d['postal_code'], $d['city'], $d['cc'], $d['cl'], $cn);
@@ -250,7 +250,7 @@ class SidnXmlWhois {
 
         // determine host roles (unofficial)
         $res = $this->xml_obj->xpath('/whois-response/domain/nameserver');
-        while(list( , $node) = each($res)) {
+        foreach($res as $node) {
             $this->parsed_host_roles[trim((string)$node)] = 'in-zone';
             foreach($node->attributes() as $key => $value) {
                 if($key == "in-zone") {
@@ -462,7 +462,7 @@ class SidnXmlWhois {
                                     ,'country_code' => $this->tech[$i]->country_code
                                     ,'country_name' => $this->tech[$i]->country_name
                                     ,'contact_type' => $this->tech[$i]->contact_type
-                                );
+                              );
    			}
    		}
 
@@ -476,7 +476,7 @@ class SidnXmlWhois {
    									,'ipv4' => $this->hosts[$i]->ipv4
    									,'ipv6' => $this->hosts[$i]->ipv6
    									,'zone' => $this->hosts[$i]->zone
-   									);
+   							  );
    			}
    		}
 
@@ -558,23 +558,23 @@ class SidnXmlWhois {
 
         // domain + viewtype
         $res = $this->xml_obj->xpath('/whois-response/domain');
-        list( , $node) = each($res[0]);
+        $node = current($res[0]);
         $this->domain = $node['name'];
         $this->view = $node['view'];
 
         // date
         $res = $this->xml_obj->xpath('/whois-response/domain/date');
-        list( , $node) = each($res[0]);
+        $node = current($res[0]);
         $this->date = (string)$node;
 
         // domain status (whois status)
         $res = $this->xml_obj->xpath('/whois-response/domain/status/code');
-        list( , $node) = each($res[0]);
+        $node = current($res[0]);
         $this->status['code'] = $node;
 
         // domain status: lang & format
         $res = $this->xml_obj->xpath('/whois-response/domain/status/explain');
-        list( , $node) = each($res[0]);
+        $node = current($res[0]);
         $this->status['lang'] = $node['lang'];
         $this->status['format'] = strtoupper($node['format']);
 
@@ -598,27 +598,27 @@ class SidnXmlWhois {
         // registered
         if(preg_match('/<registered>/i', $this->xml_str)) {
             $res = $this->xml_obj->xpath('/whois-response/domain/registered');
-            list( , $node) = each($res[0]);
+            $node = current($res[0]);
             $this->registered = (string)$node;
         }
 
         // last change
         if(preg_match('/<last-change>/i', $this->xml_str)) {
             $res = $this->xml_obj->xpath('/whois-response/domain/last-change');
-            list( , $node) = each($res[0]);
+            $node = current($res[0]);
             $this->last_change = (string)$node;
         }
 
         // out-of-quarantine date
         if($this->status['code'] == 'quarantine') {
             $res = $this->xml_obj->xpath('/whois-response/domain/status/domain-release-date');
-            list( , $node) = each($res[0]);
+            $node = current($res[0]);
             $this->out_quarantine = (string)$node;
         }
 
         // description maintainer
         $res = $this->xml_obj->xpath('/whois-response/signature/maintainer');
-        list( , $node) = each($res[0]);
+        $node = current($res[0]);
         $d = array();
         $d['lang'] = $node['lang'];
         $d['format'] = strtoupper($node['format']);
@@ -627,7 +627,7 @@ class SidnXmlWhois {
 
         // description copyright
         $res = $this->xml_obj->xpath('/whois-response/signature/copyright');
-        list( , $node) = each($res[0]);
+        $node = current($res[0]);
         $d = array();
         $d['lang'] = $node['lang'];
         $d['format'] = strtoupper($node['format']);
@@ -708,7 +708,7 @@ class SidnXmlWhois {
 
 		// detect used roles
 		$res = $this->xml_obj->xpath('/whois-response/domain/contact');
-		while(list( , $node) = each($res)) {
+        foreach($res as $node) {
 			$id = trim((string)$node);
 			foreach($node->attributes() as $key => $value) {
 				if($key == "role") {
