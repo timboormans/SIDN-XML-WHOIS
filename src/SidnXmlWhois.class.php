@@ -46,12 +46,12 @@ class SidnXmlWhois {
     private $xml_str = '';
     private $log = array();
 
-	public function __construct($lang = 'NL') {
+    public function __construct($lang = 'NL') {
         $this->lang = $lang;
-	}
+    }
 
-	public function whois($domain) {
-	    // check data validity
+    public function whois($domain) {
+        // check data validity
         if(!preg_match('/^[a-z0-9-]{2,63}\.nl$/i', $domain)) {
             $this->quit("De domeinnaam '$domain' voldoet niet aan de door SIDN gestelde eisen.");
         }
@@ -122,8 +122,8 @@ class SidnXmlWhois {
      * @param $role
      */
     public function parseContactRole($role) {
-	    $this->parse_strategy = 'selective';
-	    $this->parse_roles[] = $role;
+        $this->parse_strategy = 'selective';
+        $this->parse_roles[] = $role;
 
         // parse contacts per role instead of all contacts at once
         $this->parseRoles();
@@ -442,14 +442,14 @@ class SidnXmlWhois {
      *
      * @return array
      */
-	public function returnWhoisAsArray() {
+    public function returnWhoisAsArray() {
 
-   		// export all techs
-   		$tech_arr = array();
-   		if(count($this->tech) > 0) {
-   			for($i = 0; $i < count($this->tech); $i++) {
-   				$tech_arr[] = array(
-   				                     'id' => $this->tech[$i]->id
+        // export all techs
+        $tech_arr = array();
+        if(count($this->tech) > 0) {
+            for($i = 0; $i < count($this->tech); $i++) {
+                $tech_arr[] = array(
+                                     'id' => $this->tech[$i]->id
                                     ,'view' => $this->tech[$i]->view
                                     ,'date' => $this->tech[$i]->date
                                     ,'name' => $this->tech[$i]->name
@@ -463,94 +463,94 @@ class SidnXmlWhois {
                                     ,'country_name' => $this->tech[$i]->country_name
                                     ,'contact_type' => $this->tech[$i]->contact_type
                               );
-   			}
-   		}
+            }
+        }
 
-   		// export all hosts
-   		$hosts_arr = array();
-   		if(count($this->hosts) > 0) {
-   			for($i = 0; $i < count($this->hosts); $i++) {
-   				$hosts_arr[] = array(
-   				                     'hostname' => $this->hosts[$i]->hostname
-   									,'date' => $this->hosts[$i]->date
-   									,'ipv4' => $this->hosts[$i]->ipv4
-   									,'ipv6' => $this->hosts[$i]->ipv6
-   									,'zone' => $this->hosts[$i]->zone
-   							  );
-   			}
-   		}
+        // export all hosts
+        $hosts_arr = array();
+        if(count($this->hosts) > 0) {
+            for($i = 0; $i < count($this->hosts); $i++) {
+                $hosts_arr[] = array(
+                                     'hostname' => $this->hosts[$i]->hostname
+                                    ,'date' => $this->hosts[$i]->date
+                                    ,'ipv4' => $this->hosts[$i]->ipv4
+                                    ,'ipv6' => $this->hosts[$i]->ipv6
+                                    ,'zone' => $this->hosts[$i]->zone
+                              );
+            }
+        }
 
-   		// put all together
-   		$whois_array = array('domain' => $this->domain
-   					,'view' => $this->view
-   					,'date' => $this->date
-   					,'status' => $this->status
-   					,'registrar' => ((count($this->registrar) > 0) ?
-   									array(
-   									     'date' => $this->registrar->date
-   										,'name' => $this->registrar->name
-   										,'street' => $this->registrar->street
-   										,'postal_code' => $this->registrar->postal_code
-   										,'city' => $this->registrar->city
-   										,'country_name' => $this->registrar->country_name
-   										,'country_code' => $this->registrar->country_code
-   										,'country_lang' => $this->registrar->country_lang
-   									) : array()
-   									)
-   					,'registrant' => ((count($this->registrant) > 0) ?
-   									array(
-   									     'id' => $this->registrant->id
-   										,'view' => $this->registrant->view
-   										,'date' => $this->registrant->date
-   										,'name' => $this->registrant->name
-   										,'email' => $this->registrant->email
-   										,'voice' => $this->registrant->voice
-   										,'has_address' => $this->registrant->has_address
-   										,'street' => $this->registrant->street
-   										,'postal_code' => $this->registrant->postal_code
-   										,'city' => $this->registrant->city
-   										,'country_code' => $this->registrant->country_code
-   										,'country_name' => $this->registrant->country_name
-   										,'contact_type' => $this->registrant->contact_type
-   									) : array()
-   									)
-   					,'admin' =>  ((count($this->admin) > 0) ?
-   									array(
-   									     'id' => $this->admin->id
-   										,'view' => $this->admin->view
-   										,'date' => $this->admin->date
-   										,'name' => $this->admin->name
-   										,'email' => $this->admin->email
-   										,'voice' => $this->admin->voice
-   										,'has_address' => $this->admin->has_address
-   										,'street' => $this->admin->street
-   										,'postal_code' => $this->admin->postal_code
-   										,'city' => $this->admin->city
-   										,'country_code' => $this->admin->country_code
-   										,'country_name' => $this->admin->country_name
-   										,'contact_type' => $this->admin->contact_type
-   									) : array()
-   									)
-   					,'tech' => $tech_arr
-   					,'hosts' => $hosts_arr
-   					,'registered' => $this->registered
-   					,'last_change' => $this->last_change
-   					,'out_quarantine' => $this->out_quarantine
-   					,'maintainer' => array(
-   					                       'lang' => $this->maintainer->lang
-   										  ,'format' => $this->maintainer->format
-   										  ,'desc' => $this->maintainer->description
-   									)
-   					,'copyright' => array(
-   					                        'lang' => $this->copyright->lang
-   										  ,'format' => $this->copyright->format
-   										  ,'desc' => $this->copyright->description
-   									)
-   		);
+        // put all together
+        $whois_array = array('domain' => $this->domain
+                    ,'view' => $this->view
+                    ,'date' => $this->date
+                    ,'status' => $this->status
+                    ,'registrar' => ((count($this->registrar) > 0) ?
+                                    array(
+                                         'date' => $this->registrar->date
+                                        ,'name' => $this->registrar->name
+                                        ,'street' => $this->registrar->street
+                                        ,'postal_code' => $this->registrar->postal_code
+                                        ,'city' => $this->registrar->city
+                                        ,'country_name' => $this->registrar->country_name
+                                        ,'country_code' => $this->registrar->country_code
+                                        ,'country_lang' => $this->registrar->country_lang
+                                    ) : array()
+                                    )
+                    ,'registrant' => ((count($this->registrant) > 0) ?
+                                    array(
+                                         'id' => $this->registrant->id
+                                        ,'view' => $this->registrant->view
+                                        ,'date' => $this->registrant->date
+                                        ,'name' => $this->registrant->name
+                                        ,'email' => $this->registrant->email
+                                        ,'voice' => $this->registrant->voice
+                                        ,'has_address' => $this->registrant->has_address
+                                        ,'street' => $this->registrant->street
+                                        ,'postal_code' => $this->registrant->postal_code
+                                        ,'city' => $this->registrant->city
+                                        ,'country_code' => $this->registrant->country_code
+                                        ,'country_name' => $this->registrant->country_name
+                                        ,'contact_type' => $this->registrant->contact_type
+                                    ) : array()
+                                    )
+                    ,'admin' =>  ((count($this->admin) > 0) ?
+                                    array(
+                                         'id' => $this->admin->id
+                                        ,'view' => $this->admin->view
+                                        ,'date' => $this->admin->date
+                                        ,'name' => $this->admin->name
+                                        ,'email' => $this->admin->email
+                                        ,'voice' => $this->admin->voice
+                                        ,'has_address' => $this->admin->has_address
+                                        ,'street' => $this->admin->street
+                                        ,'postal_code' => $this->admin->postal_code
+                                        ,'city' => $this->admin->city
+                                        ,'country_code' => $this->admin->country_code
+                                        ,'country_name' => $this->admin->country_name
+                                        ,'contact_type' => $this->admin->contact_type
+                                    ) : array()
+                                    )
+                    ,'tech' => $tech_arr
+                    ,'hosts' => $hosts_arr
+                    ,'registered' => $this->registered
+                    ,'last_change' => $this->last_change
+                    ,'out_quarantine' => $this->out_quarantine
+                    ,'maintainer' => array(
+                                           'lang' => $this->maintainer->lang
+                                          ,'format' => $this->maintainer->format
+                                          ,'desc' => $this->maintainer->description
+                                    )
+                    ,'copyright' => array(
+                                            'lang' => $this->copyright->lang
+                                          ,'format' => $this->copyright->format
+                                          ,'desc' => $this->copyright->description
+                                    )
+        );
 
-   		// return array with whois data
-   		return $whois_array;
-   	}
+        // return array with whois data
+        return $whois_array;
+    }
 
     private function reParseBaseWhoisElements() {
         // create an xml object
@@ -634,45 +634,45 @@ class SidnXmlWhois {
         $d['desc'] = (string)trim($res[0]);
         $this->copyright = new SidnXmlWhoisDescription($d['lang'], $d['format'], $d['desc']);
     }
-	
-	private function parseContacts() {
-		// parse ALL contacts only once
-		$this->parseRoles();
-		
-		// all contacts
-		$contacts = $this->xml_obj->xpath('/whois-response/contact');
-		foreach($contacts as $contact) {
-			$d = array();
-			
-			// contact id+view
-			foreach($contact->attributes() as $key => $value) {
-				if($key == "id") {
-					$d['id'] = trim((string)$value);
-				} elseif($key == "view") {
-					$d['view'] = (string)$value;
-				}
-			}
-			
-			// contact address/data
-			$d['date'] = (string)$contact[0]->date;
-			$d['name'] = (string)$contact[0]->name;
-			$d['email'] = (string)$contact[0]->email;
-			$d['voice'] = (string)$contact[0]->voice;
-			if(isset($contact->address)) {
-				$d['street'] = (string)$contact->address->street;
-				$d['postal_code'] = (string)$contact->address->{"postal-code"};
-				$d['city'] = (string)$contact->address->city;
-				$d['cc'] = (string)$contact->address->{"country-code"};
-				$d['cn'] = (string)$contact->address->country; // country lang
-			} else {
-				$d['street'] = '';
-				$d['postal_code'] = '';
-				$d['city'] = '';
-				$d['cc'] = '';
-				$d['cn'] = '';
-			}
-			
-			// create object and store as local variable
+
+    private function parseContacts() {
+        // parse ALL contacts only once
+        $this->parseRoles();
+
+        // all contacts
+        $contacts = $this->xml_obj->xpath('/whois-response/contact');
+        foreach($contacts as $contact) {
+            $d = array();
+
+            // contact id+view
+            foreach($contact->attributes() as $key => $value) {
+                if($key == "id") {
+                    $d['id'] = trim((string)$value);
+                } elseif($key == "view") {
+                    $d['view'] = (string)$value;
+                }
+            }
+
+            // contact address/data
+            $d['date'] = (string)$contact[0]->date;
+            $d['name'] = (string)$contact[0]->name;
+            $d['email'] = (string)$contact[0]->email;
+            $d['voice'] = (string)$contact[0]->voice;
+            if(isset($contact->address)) {
+                $d['street'] = (string)$contact->address->street;
+                $d['postal_code'] = (string)$contact->address->{"postal-code"};
+                $d['city'] = (string)$contact->address->city;
+                $d['cc'] = (string)$contact->address->{"country-code"};
+                $d['cn'] = (string)$contact->address->country; // country lang
+            } else {
+                $d['street'] = '';
+                $d['postal_code'] = '';
+                $d['city'] = '';
+                $d['cc'] = '';
+                $d['cn'] = '';
+            }
+
+            // create object and store as local variable
             if($this->parse_strategy == 'all' || in_array('registrant', $this->parse_roles)) {
                 if($d['id'] == $this->parsed_contact_roles['registrant']) {
                     $d['role'] = 'registrant';
@@ -697,35 +697,35 @@ class SidnXmlWhois {
                 }
             }
 
-		}
-	}
-	
-	private function parseRoles() {
+        }
+    }
 
-	    if($this->xml_obj === null) {
-	        $this->reParseBaseWhoisElements();
+    private function parseRoles() {
+
+        if($this->xml_obj === null) {
+            $this->reParseBaseWhoisElements();
         }
 
-		// detect used roles
-		$res = $this->xml_obj->xpath('/whois-response/domain/contact');
+        // detect used roles
+        $res = $this->xml_obj->xpath('/whois-response/domain/contact');
         foreach($res as $node) {
-			$id = trim((string)$node);
-			foreach($node->attributes() as $key => $value) {
-				if($key == "role") {
-					$type = (string)$value;
-					if($type == "registrant")
-						$this->parsed_contact_roles['registrant'] = $id;
-					elseif($type == "admin")
-						$this->parsed_contact_roles['admin'] = $id;
-					else
-						$this->parsed_contact_roles['tech'][] = $id;
-				}
-			}
-		}
-	}
+            $id = trim((string)$node);
+            foreach($node->attributes() as $key => $value) {
+                if($key == "role") {
+                    $type = (string)$value;
+                    if($type == "registrant")
+                        $this->parsed_contact_roles['registrant'] = $id;
+                    elseif($type == "admin")
+                        $this->parsed_contact_roles['admin'] = $id;
+                    else
+                        $this->parsed_contact_roles['tech'][] = $id;
+                }
+            }
+        }
+    }
 
-   	public function getLog() {
-	    return $this->log;
+    public function getLog() {
+        return $this->log;
     }
 
     private function log($msg) {
