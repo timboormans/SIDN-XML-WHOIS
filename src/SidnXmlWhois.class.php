@@ -50,7 +50,7 @@ class SidnXmlWhois {
     private $log = array();
 
     public function __construct($lang = 'NL') {
-        $this->lang = $lang;
+        $this->lang = strtoupper($lang);
     }
 
     public function whois($domain) {
@@ -60,7 +60,8 @@ class SidnXmlWhois {
         }
 
         // init
-        if(!in_array(strtoupper($this->lang), array('NL', 'EN'))) {
+        $this->lang = strtoupper($this->lang);
+        if(!in_array($this->lang, array('NL', 'EN'))) {
             $this->lang = 'NL';
         }
         $url = "http://rwhois.domain-registry.nl/whois?domain=".$domain."&format=xml&lang=".$this->lang;
@@ -109,7 +110,7 @@ class SidnXmlWhois {
 
         } else {
             // No wrapper found to handle the request
-            $this->quit("Your server does not allow outbound connections. Enable sockets or cURL to proceed.");
+            $this->quit("Your server does not allow outbound connections. Enable sockets and/or cURL to proceed.");
         }
         if(!strpos($this->xml_str, '</whois-response>')) {
             $this->quit("Could not fetch the XML Whois from SIDN. Is your IP whitelisting configured correctly, both IPv4 and IPv6 (if applicable)?");
