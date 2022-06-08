@@ -10,6 +10,7 @@ foreach(glob('src/*.class.php') as $filename) {
 
 // application
 $whois = new SidnXmlWhois('NL');
+$whois->whois('oneofyourownmanageddomains.nl');
 $whois->parseContactRole('registrant'); // add 'registrant' to the result set
 $whois->parseContactRole('admin'); // add 'admin' to the result set
 $whois->parseContactRole('tech'); // add 'tech' to the result set
