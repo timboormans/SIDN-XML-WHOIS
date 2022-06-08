@@ -6,13 +6,13 @@ thus removing parts of the WHOIS that you don't need for a particular process.
 See the examples folder for the different use cases.
 
 ### Requirements
-* Sockets or cURL
+* Sockets and cURL
 * SIDN registrar accreditation
 * Your server firewall allowing outgoing connections
 * Your server IPv4 (and if applicable IPv6) needs to added to the SIDN IP whitelist.
 
 ### To-do
-* Incorrect old PDF docs need to be rewritten to HTML documentation.
+* The old PDF documentation should be rewritten to Markdown or HTML documentation.
 
 ## Example
 An example in it's most simple form:
@@ -89,5 +89,6 @@ if(isset($_POST['domain']) && strlen($_POST['domain']) > 0) {
 ```
 
 ###### Author notes
+* Updated in 2022 with some small improvements, making the library a final version.
 * Initiated in 2010 and revised in 2012. Overhauled in 2018 to keep it working with PHP 7+ and added support for all new available functionality.
 * Published on GitHub for easier community driven development.
